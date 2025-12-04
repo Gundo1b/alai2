@@ -20,14 +20,14 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex flex-col pt-32 pb-20 overflow-hidden">
+    <section ref={containerRef} className="relative flex flex-col pt-8 sm:pt-16 md:pt-24 lg:pt-32 pb-8 sm:pb-12 md:pb-16 overflow-hidden h-auto">
 
-      <div className="container mx-auto z-10 relative px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div className="container mx-auto z-10 relative px-2 sm:px-4 md:px-6">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-8 items-start">
 
           {/* Row/Col 1: Text Content */}
           <div className="text-center lg:text-left flex flex-col items-center lg:items-start order-1">
-            <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.1] flex flex-wrap justify-center lg:justify-start gap-x-4">
+            <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-7xl font-display font-bold mb-4 tracking-tight text-slate-900 dark:text-white leading-[1.1] flex flex-wrap justify-center lg:justify-start gap-x-1 sm:gap-x-2">
               <TextRoll className="block">One Platform.</TextRoll>
               <span className="text-gradient block">
                 <TextRoll delay={0.5}>Endless Intelligence.</TextRoll>
@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed max-w-2xl lg:max-w-xl backdrop-blur-sm rounded-lg"
+              className="text-xs sm:text-base md:text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed max-w-2xl lg:max-w-xl backdrop-blur-sm rounded-lg"
             >
               Unify chat, code, image, and video into a single seamless workspace.
               Stop switching context. Start creating the future.
@@ -48,12 +48,12 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
-              className="flex flex-col sm:flex-row gap-4 mb-12"
+              className="flex flex-col sm:flex-row gap-3 mb-8"
             >
-              <button className="px-8 py-4 rounded-full bg-brand-primary hover:bg-blue-600 text-white font-semibold text-lg shadow-[0_0_20px_rgba(0,157,255,0.4)] hover:shadow-[0_0_30px_rgba(0,157,255,0.6)] transition-all transform hover:-translate-y-1">
+              <button className="px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-brand-primary hover:bg-blue-600 text-white font-semibold text-sm sm:text-base shadow-[0_0_20px_rgba(0,157,255,0.4)] hover:shadow-[0_0_30px_rgba(0,157,255,0.6)] transition-all transform hover:-translate-y-1">
                 Join Early Access
               </button>
-              <button className="px-8 py-4 rounded-full border border-slate-300 dark:border-slate-700 hover:border-brand-primary text-slate-700 dark:text-slate-300 font-medium text-lg transition-all hover:bg-slate-100 dark:hover:bg-slate-800 backdrop-blur-sm bg-white/5">
+              <button className="px-4 py-2 sm:px-6 sm:py-3 rounded-full border border-slate-300 dark:border-slate-700 hover:border-brand-primary text-slate-700 dark:text-slate-300 font-medium text-sm sm:text-base transition-all hover:bg-slate-100 dark:hover:bg-slate-800 backdrop-blur-sm bg-white/5">
                 Watch the Demo
               </button>
             </motion.div>
@@ -76,14 +76,14 @@ const Hero: React.FC = () => {
               </div>
 
               {/* Integrated CardDemo */}
-              <div className="relative w-full h-[250px] md:h-[300px] overflow-visible">
+              <div className="relative w-full h-[150px] sm:h-[180px] md:h-[220px] lg:h-[250px] overflow-visible flex-shrink-0">
                 <CardDemo />
               </div>
             </motion.div>
           </div>
 
           {/* Row/Col 2: Visual (Orbit + Logo) */}
-          <div className="relative order-2 flex justify-center items-center h-[400px] lg:h-[600px] w-full">
+          <div className="relative order-2 flex justify-center items-center h-[200px] sm:h-[250px] md:h-[300px] lg:h-[400px] w-full flex-shrink-0">
             {/* 
                   We use a fixed size container (320px) to match the radius math (160px).
                   We use CSS transforms (scale) to make it responsive, ensuring icons stay perfectly on the ring.
@@ -91,7 +91,7 @@ const Hero: React.FC = () => {
               */}
             <motion.div
               style={{ y: y2 }}
-              className="relative flex items-center justify-center w-[320px] h-[320px] scale-90 sm:scale-110 lg:scale-125"
+              className="relative flex items-center justify-center w-[320px] h-[320px] scale-40 sm:scale-60 md:scale-80 lg:scale-100 xl:scale-125"
             >
               {/* Orbit Ring */}
               <div className="absolute inset-0 pointer-events-none opacity-30 dark:opacity-40">

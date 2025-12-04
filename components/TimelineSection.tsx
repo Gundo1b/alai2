@@ -59,9 +59,7 @@ export function TimelineSection() {
             The path to AGI Workspaces
           </p>
           <div className="mb-8">
-            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 mb-2">
-              <Zap className="w-4 h-4 text-brand-primary" /> Real-time Voice Interaction
-            </div>
+
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 mb-2">
               <Zap className="w-4 h-4 text-brand-primary" /> Autonomous Agents
             </div>
