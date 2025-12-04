@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integen AI - The Future of Creative Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+              display: ['Space Grotesk', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                primary: '#009DFF',
+                cyan: '#64E1FF',
+                dark: '#050510',
+                light: '#F9FBFF',
+                accent: '#8B5CF6', // Violet
+              },
+            },
+            backgroundImage: {
+              'aurora': 'linear-gradient(135deg, #64E1FF 0%, #009DFF 50%, #8B5CF6 100%)',
+              'aurora-subtle': 'linear-gradient(135deg, rgba(100, 225, 255, 0.1) 0%, rgba(0, 157, 255, 0.1) 50%, rgba(139, 92, 246, 0.1) 100%)',
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              }
+            }
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(100, 225, 255, 0.3);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 225, 255, 0.6);
+      }
+      
+      .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      .dark .glass-card {
+        background: rgba(5, 5, 16, 0.6);
+        border: 1px solid rgba(100, 225, 255, 0.1);
+      }
+
+      .text-gradient {
+        background: linear-gradient(to right, #64E1FF, #009DFF, #8B5CF6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .mesh-bg {
+        background-color: transparent;
+        background-image: 
+          radial-gradient(at 0% 0%, hsla(192,100%,70%,0.2) 0px, transparent 50%),
+          radial-gradient(at 100% 0%, hsla(260,100%,70%,0.2) 0px, transparent 50%),
+          radial-gradient(at 100% 100%, hsla(200,100%,60%,0.2) 0px, transparent 50%),
+          radial-gradient(at 0% 100%, hsla(280,100%,70%,0.2) 0px, transparent 50%);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.25",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
