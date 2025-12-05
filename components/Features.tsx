@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, Shield, Maximize, MousePointer2 } from 'lucide-react';
+import { EncryptedText } from './ui/encrypted-text';
 
 
 const Features: React.FC = () => {
@@ -40,9 +41,12 @@ const Features: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-white mb-6">
-              Why leading teams <br /> choose Integen
-            </h2>
+            <EncryptedText
+              text="Why leading teams choose Integen"
+              encryptedClassName="text-neutral-500"
+              revealedClassName="text-slate-900 dark:text-white font-display font-bold text-4xl md:text-5xl"
+              revealDelayMs={50}
+            />
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed backdrop-blur-sm rounded-lg">
               We didn't just bundle tools together. We rebuilt the creative engine from the ground up to be faster, smarter, and more intuitive.
             </p>
@@ -62,7 +66,12 @@ const Features: React.FC = () => {
                 <div className="w-12 h-12 bg-slate-100 dark:bg-white/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-primary group-hover:text-white transition-colors">
                   <adv.icon className="w-6 h-6 text-slate-700 dark:text-slate-300 group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{adv.title}</h3>
+                <EncryptedText
+                  text={adv.title}
+                  encryptedClassName="text-neutral-500"
+                  revealedClassName="text-slate-900 dark:text-white font-bold text-xl"
+                  revealDelayMs={30 + idx * 100}
+                />
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                   {adv.desc}
                 </p>

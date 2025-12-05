@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { MessageCircle, Code2, Image as ImageIcon, Video, Sparkles, Cpu } from 'lucide-react';
 import { LogoIcon } from './Logo';
 import { CardDemo } from './ui/CardDemo';
-import { TypewriterEffectSmooth } from './ui/typewriter-effect';
 
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,23 +28,8 @@ const Hero: React.FC = () => {
           <div className="text-center lg:text-left flex flex-col items-center lg:items-start order-1">
             <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-7xl font-display font-bold mb-4 tracking-tight text-slate-900 dark:text-white leading-[1.1] flex flex-wrap justify-center lg:justify-start gap-x-1 sm:gap-x-2">
               <div className="flex flex-col items-center lg:items-start">
-                <TypewriterEffectSmooth
-                  words={[
-                    { text: "One" },
-                    { text: "Conversation." },
-                  ]}
-                  className="text-4xl md:text-6xl lg:text-7xl"
-                />
-                <span className="text-gradient block">
-                  <TypewriterEffectSmooth
-                    words={[
-                      { text: "Infinite" },
-                      { text: "Possibilities.", className: "text-gradient" },
-                    ]}
-                    delay={2000}
-                    className="text-4xl md:text-6xl lg:text-7xl"
-                  />
-                </span>
+                <span>One Conversation.</span>
+                <span className="text-gradient block">Infinite Possibilities.</span>
               </div>
             </h1>
 
