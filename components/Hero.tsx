@@ -20,7 +20,7 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative flex flex-col pt-8 sm:pt-16 md:pt-24 lg:pt-32 pb-8 sm:pb-12 md:pb-16 overflow-hidden h-auto">
+    <section ref={containerRef} className="relative flex flex-col pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-8 sm:pb-12 md:pb-16 overflow-hidden h-auto">
 
       <div className="container mx-auto z-10 relative px-2 sm:px-4 md:px-6">
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-8 items-start">
@@ -28,7 +28,7 @@ const Hero: React.FC = () => {
           {/* Row/Col 1: Text Content */}
           <div className="text-center lg:text-left flex flex-col items-center lg:items-start order-1">
             <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-7xl font-display font-bold mb-4 tracking-tight text-slate-900 dark:text-white leading-[1.1] flex flex-wrap justify-center lg:justify-start gap-x-1 sm:gap-x-2">
-              <TextRoll className="block">One Platform.</TextRoll>
+              <TextRoll>One Platform.</TextRoll>
               <span className="text-gradient block">
                 <TextRoll delay={0.5}>Endless Intelligence.</TextRoll>
               </span>
