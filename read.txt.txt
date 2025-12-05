@@ -1,0 +1,162 @@
+You are an expert Next.js + React + Tailwind + shadcn/ui + Framer Motion front-end developer.
+
+Task:
+Build the hero section for the Integen AI landing page. This hero must clearly welcome the user, showcase everything Integen does, and use a two-column layout on desktop (stacked column layout on mobile).
+
+Layout
+
+Desktop:
+
+grid grid-cols-1 lg:grid-cols-2 gap-8 items-center
+
+Left column: text/content.
+
+Right column: animated visual (logo + best LLMs orbiting).
+
+Mobile:
+
+Stack columns: text on top, visual below.
+
+Make sure spacing and padding feel generous (py-16 lg:py-24, px-4 sm:px-6 lg:px-8).
+
+Background & Atmosphere
+
+Hero section sits on a subtle animated gradient background.
+
+Use Framer Motion for:
+
+Light fade/slide in of both columns.
+
+Slow floating/hover movement of the hero card and orbits.
+
+Add soft aurora blobs behind the hero card (blurred, low opacity) to make it feel futuristic but still clean.
+
+Left Column – Welcome & Messaging
+
+This column should feel like a warm welcome + powerful overview.
+
+Add a small pill badge at the top (shadcn Badge or pill):
+
+New • Welcome to Integen AI
+
+Main headline (big, bold, multi-line):
+
+“Welcome to Integen AI – your all-in-one creative intelligence workspace.”
+
+Subheading (short paragraph that showcases everything Integen does):
+
+“Integen AI brings chat, code, image, and video together in one unified platform. Orchestrated by the best LLMs, you get faster ideas, cleaner code, smarter visuals, and smoother workflows—without jumping between apps.”
+
+Below the subheading, show a small 2–3 item horizontal feature list (text only, or small icons + text):
+
+“Chat & reasoning”
+
+“Code & automation”
+
+“Image & video generation”
+
+Use simple pills or inline badges to keep it compact and elegant.
+
+CTAs (use shadcn Button):
+
+Primary button (gradient, slightly larger):
+
+Label: “Join Early Access”
+
+Secondary button (ghost / outline):
+
+Label: “See how it works”
+
+Arrange them side-by-side on desktop; stacked on mobile.
+
+Tiny social proof under the CTAs (small, subtle text):
+
+“Built for creators, students, developers, and teams.”
+
+Use Framer Motion to animate this entire column with a fade-in + slight slide-up when it first appears.
+
+Right Column – Logo + Best LLMs Orbiting (Showcase Visual)
+
+This column should visually explain that Integen is the center orchestrating the best models.
+
+Wrap everything in a shadcn Card with:
+
+Glassmorphism style: translucent background, soft border, subtle shadow.
+
+Rounded corners (rounded-3xl).
+
+Padding (p-6 sm:p-8).
+
+Center of the card:
+
+A circular container for the Integen logo (for now, use a placeholder div or image).
+
+Use Framer Motion to apply a gentle pulse or breathing animation (slight scale between 0.98 and 1.02).
+
+Later, I will replace this with the real logo image.
+
+Orbiting LLM labels around the logo:
+
+Create 4–6 small circular or pill elements (mini badges) that move in a slow orbit around the logo.
+
+Example labels:
+
+GPT-4.1
+
+Claude 3.5
+
+Gemini 1.5
+
+Llama 3
+
+Mistral
+
+Use Framer Motion to:
+
+Animate each chip along a circular path (different angles, slight offsets).
+
+Add a small hover effect: scale up slightly + soft glow.
+
+Behind the logo and chips:
+
+Draw thin glowing orbit rings (1–2 circles) with low opacity.
+
+Place a subtle radial glow behind the center to frame the logo.
+
+At the bottom of the card (inside it), add a tiny caption line in small text:
+
+“Integen AI orchestrates the best LLMs into one seamless creative workspace.”
+
+Optionally, below the caption, add a row of simple labeled chips:
+
+Chat
+
+Code
+
+Image
+
+Video
+
+These can be static, just to reinforce modalities.
+
+Make the whole card float slightly using Framer Motion (slow y-axis up/down animation) for a premium feel.
+
+Implementation Notes
+
+Use shadcn/ui components where reasonable:
+
+Button, Badge, Card.
+
+Use Tailwind for layout and spacing.
+
+The hero should look:
+
+Clean, welcoming, and premium.
+
+Clearly show what Integen is, who it’s for, and that it uses the best LLMs.
+
+Ensure perfect responsiveness:
+
+On mobile: column layout stacked, centered text, comfortable spacing.
+
+On large screens: strong two-column layout with balanced whitespace.

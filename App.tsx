@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Theme } from './types';
 import Navigation from './components/Navigation';
-import Hero from './components/Hero';
+import HeroSection from './components/HeroSection';
 import ProblemSolution from './components/ProblemSolution';
 import Features from './components/Features';
 import Personas from './components/Personas';
@@ -50,7 +50,7 @@ const App: React.FC = () => {
         <Navigation theme={theme} toggleTheme={toggleTheme} />
 
         <main className="relative">
-          <Hero />
+          <HeroSection />
           <UnifiedWorkflow />
           {/* <ProblemSolution /> */}
           <Features />

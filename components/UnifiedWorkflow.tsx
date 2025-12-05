@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Image as ImageIcon, Video, Bot, Sparkles } from 'lucide-react';
 
-import { EncryptedText } from './ui/encrypted-text';
+import { RevealText } from './ui/reveal-text';
+import WaveText from 'components/smoothui/components/wave-text';
 
 const UnifiedWorkflow: React.FC = () => {
     return (
@@ -18,20 +19,20 @@ const UnifiedWorkflow: React.FC = () => {
                 >
                     <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight">
                         <div className="text-slate-900 dark:text-white mb-2">
-                            <EncryptedText
-                                text="One Conversation."
-                                encryptedClassName="text-neutral-500"
-                                revealedClassName="text-slate-900 dark:text-white"
-                                revealDelayMs={50}
-                            />
+                            <RevealText
+                                direction="up"
+                                delay={0}
+                            >
+                                One Conversation.
+                            </RevealText>
                         </div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-primary">
-                            <EncryptedText
-                                text="Infinite Possibilities."
-                                encryptedClassName="text-neutral-500"
-                                revealedClassName="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-primary"
-                                revealDelayMs={50}
-                            />
+                            <RevealText
+                                direction="up"
+                                delay={300}
+                            >
+                                Infinite Possibilities.
+                            </RevealText>
                         </div>
                     </h2>
                     <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed">
