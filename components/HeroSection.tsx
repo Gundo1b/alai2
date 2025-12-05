@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const HeroSection = () => {
   return (
-    <motion.section 
+    <motion.section
       className="relative py-16 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -19,14 +19,14 @@ const HeroSection = () => {
           className="text-center"
         >
           {/* Pill Badge */}
-          <motion.span 
+          {/* <motion.span 
             className="inline-flex items-center rounded-full bg-blue-100 px-3 py-0.5 text-sm font-medium text-blue-800 mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             New • Welcome to Integen AI
-          </motion.span>
+          </motion.span> */}
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
@@ -49,7 +49,7 @@ const HeroSection = () => {
           </h1>
 
           {/* Subheading */}
-          <motion.p 
+          <motion.p
             className="mt-4 text-lg text-gray-600 dark:text-gray-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ const HeroSection = () => {
           </motion.p>
 
           {/* Feature List */}
-          <motion.div 
+          <motion.div
             className="mt-8 flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-2 text-gray-700 dark:text-gray-400 text-sm font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,7 +72,7 @@ const HeroSection = () => {
           </motion.div>
 
           {/* CTAs */}
-          <motion.div 
+          <motion.div
             className="mt-10 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Social Proof */}
-          <motion.p 
+          <motion.p
             className="mt-8 text-sm text-gray-500 dark:text-gray-400"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
