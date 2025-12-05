@@ -9,6 +9,7 @@ import Personas from './components/Personas';
 import Pricing from './components/Pricing';
 import Footer from './components/Footer';
 import { Vortex } from './components/ui/Vortex';
+import UnifiedWorkflow from './components/UnifiedWorkflow';
 import { TimelineSection } from './components/TimelineSection';
 
 const App: React.FC = () => {
@@ -36,21 +37,22 @@ const App: React.FC = () => {
     <div className={`min-h-screen transition-colors duration-500 ${theme === Theme.DARK ? 'bg-brand-dark' : 'bg-brand-light'} relative`}>
       {/* Global Vortex Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-          <Vortex
-              backgroundColor="transparent"
-              rangeY={800}
-              particleCount={500}
-              baseHue={200}
-              className="w-full h-full"
-          />
+        <Vortex
+          backgroundColor="transparent"
+          rangeY={800}
+          particleCount={500}
+          baseHue={200}
+          className="w-full h-full"
+        />
       </div>
 
       <div className="relative z-10">
         <Navigation theme={theme} toggleTheme={toggleTheme} />
-        
+
         <main className="relative">
           <Hero />
-          <ProblemSolution />
+          <UnifiedWorkflow />
+          {/* <ProblemSolution /> */}
           <Features />
           <TimelineSection />
           <Personas />

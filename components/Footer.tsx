@@ -1,63 +1,69 @@
 import React from 'react';
-import { Twitter, Github, Linkedin } from 'lucide-react';
 import { LogoIcon, LogoText } from './Logo';
 
 const Footer: React.FC = () => {
-    const currentYear = new Date().getFullYear();
-
-    const footerLinks = {
-        product: [
-            { label: 'Features', href: '#features' },
-            { label: 'Pricing', href: '#pricing' },
-            { label: 'Integrations', href: '#' },
-            { label: 'Changelog', href: '#' },
-            { label: 'Roadmap', href: '#roadmap' },
+    const footerSections = {
+        Product: [
+            { label: 'Overview', href: '#' },
+            { label: 'Features', href: '#' },
+            { label: 'API', href: '#' },
         ],
-        company: [
-            { label: 'About Us', href: '#company' },
+        Solutions: [
+            { label: 'For Developers', href: '#' },
+            { label: 'For Teams', href: '#' },
+            { label: 'Case Studies', href: '#' },
+        ],
+        Pricing: [
+            { label: 'Plans', href: '#' },
+            { label: 'Compare', href: '#' },
+            { label: 'FAQ', href: '#' },
+        ],
+        Languages: [
+            { label: 'English', href: '#' },
+            { label: 'Spanish', href: '#' },
+            { label: 'French', href: '#' },
+        ],
+        Company: [
+            { label: 'About', href: '#' },
             { label: 'Careers', href: '#' },
-            { label: 'Blog', href: '#' },
             { label: 'Contact', href: '#' },
-            { label: 'Partners', href: '#' },
-        ]
+            { label: 'Blog', href: '#' },
+        ],
     };
 
     return (
         <footer className="relative bg-slate-50 dark:bg-slate-950 py-8 overflow-hidden border-t border-slate-200 dark:border-slate-800">
-            <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-
-                {/* Logo & Copyright */}
-                <div className="flex items-center gap-4">
+            <div className="container mx-auto px-6">
+                {/* Logo */}
+                <div className="flex justify-center mb-6">
                     <div className="flex items-center space-x-2">
                         <LogoIcon className="w-6 h-6" />
                         <LogoText className="text-lg" />
                     </div>
-                    <span className="text-sm text-slate-400 hidden md:inline-block">|</span>
-                    <span className="text-sm text-slate-500 dark:text-slate-400">© {currentYear} Integen AI</span>
                 </div>
 
-                {/* Links - Single Line */}
-                <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium text-slate-600 dark:text-slate-300">
-                    {footerLinks.product.map((link) => (
-                        <a key={link.label} href={link.href} className="hover:text-brand-primary transition-colors">
-                            {link.label}
-                        </a>
+                {/* Footer Sections */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-6">
+                    {Object.entries(footerSections).map(([section, links]) => (
+                        <div key={section} className="flex flex-col">
+                            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">{section}</h3>
+                            <ul className="space-y-2">
+                                {links.map((link) => (
+                                    <li key={link.label}>
+                                        <a href={link.href} className="text-sm text-slate-600 dark:text-slate-300 hover:text-brand-primary transition-colors">
+                                            {link.label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     ))}
-                    <span className="hidden md:block w-px h-4 bg-slate-300 dark:bg-slate-700 self-center" />
-                    {footerLinks.company.map((link) => (
-                        <a key={link.label} href={link.href} className="hover:text-brand-primary transition-colors">
-                            {link.label}
-                        </a>
-                    ))}
-                </nav>
-
-                {/* Socials */}
-                <div className="flex items-center gap-4">
-                    <a href="#" className="text-slate-400 hover:text-brand-primary transition-colors"><Twitter size={18} /></a>
-                    <a href="#" className="text-slate-400 hover:text-brand-primary transition-colors"><Github size={18} /></a>
-                    <a href="#" className="text-slate-400 hover:text-brand-primary transition-colors"><Linkedin size={18} /></a>
                 </div>
 
+                {/* Copyright */}
+                <div className="text-center text-sm text-slate-500 dark:text-slate-400">
+                    © 2025 Integen Portal. All Rights Reserved.
+                </div>
             </div>
         </footer>
     );

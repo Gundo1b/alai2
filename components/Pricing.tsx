@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 
+
+
 const Pricing: React.FC = () => {
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
 
@@ -27,8 +29,9 @@ const Pricing: React.FC = () => {
   ];
 
   return (
-    <section id="pricing" className="py-24 bg-transparent">
-      <div className="container mx-auto px-6">
+    <section id="pricing" className="relative py-24 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-display font-bold text-slate-900 dark:text-white mb-4">
             Simple, Transparent Pricing
@@ -55,32 +58,32 @@ const Pricing: React.FC = () => {
               whileHover={{ y: -8 }}
               className={`relative p-8 rounded-3xl border backdrop-blur-xl ${tier.gradient ? 'border-brand-primary shadow-2xl shadow-brand-primary/20 bg-white/10' : 'border-slate-200 dark:border-white/10 bg-white/60 dark:bg-white/5'}`}
             >
-               {tier.gradient && (
-                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-brand-cyan to-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                   Most Popular
-                 </div>
-               )}
+              {tier.gradient && (
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-brand-cyan to-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  Most Popular
+                </div>
+              )}
 
-               <h3 className="text-xl font-medium text-slate-900 dark:text-white mb-2">{tier.name}</h3>
-               <div className="flex items-baseline mb-6">
-                 <span className="text-4xl font-bold text-slate-900 dark:text-white">{tier.price === 'Custom' ? '' : '$'}{tier.price}</span>
-                 {tier.price !== 'Custom' && <span className="text-slate-500 ml-2">/mo</span>}
-               </div>
+              <h3 className="text-xl font-medium text-slate-900 dark:text-white mb-2">{tier.name}</h3>
+              <div className="flex items-baseline mb-6">
+                <span className="text-4xl font-bold text-slate-900 dark:text-white">{tier.price === 'Custom' ? '' : '$'}{tier.price}</span>
+                {tier.price !== 'Custom' && <span className="text-slate-500 ml-2">/mo</span>}
+              </div>
 
-               <ul className="space-y-4 mb-8">
-                 {tier.features.map((f, i) => (
-                   <li key={i} className="flex items-center text-slate-600 dark:text-slate-300 text-sm">
-                     <Check className="w-4 h-4 text-brand-primary mr-3" />
-                     {f}
-                   </li>
-                 ))}
-               </ul>
+              <ul className="space-y-4 mb-8">
+                {tier.features.map((f, i) => (
+                  <li key={i} className="flex items-center text-slate-600 dark:text-slate-300 text-sm">
+                    <Check className="w-4 h-4 text-brand-primary mr-3" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
 
-               <button className={`w-full py-3 rounded-xl font-semibold transition-all ${tier.gradient 
-                 ? 'bg-brand-primary text-white hover:bg-blue-600 shadow-lg shadow-brand-primary/25' 
-                 : 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/20'}`}>
-                 {tier.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
-               </button>
+              <button className={`w-full py-3 rounded-xl font-semibold transition-all ${tier.gradient
+                ? 'bg-brand-primary text-white hover:bg-blue-600 shadow-lg shadow-brand-primary/25'
+                : 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/20'}`}>
+                {tier.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
+              </button>
             </motion.div>
           ))}
         </div>

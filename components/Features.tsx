@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, Shield, Maximize, MousePointer2 } from 'lucide-react';
 
+
 const Features: React.FC = () => {
   const advantages = [
     {
@@ -32,9 +33,6 @@ const Features: React.FC = () => {
 
   return (
     <section className="py-24 bg-transparent relative">
-      {/* Background Mesh - Optional enhancement over Vortex */}
-      <div className="absolute inset-0 mesh-bg opacity-30 pointer-events-none" />
-
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
