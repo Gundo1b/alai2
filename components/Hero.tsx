@@ -1,164 +1,432 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { MessageCircle, Code2, Image as ImageIcon, Video, Sparkles, Cpu } from 'lucide-react';
-import { LogoIcon } from './Logo';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 import { CardDemo } from './ui/CardDemo';
 
-const Hero: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
-  // Apply parallax to the entire visual block so pieces don't drift apart
-  const y2 = useTransform(scrollY, [0, 500], [0, -50]);
+interface ElasticHueSliderProps {
+  value: number;
+  onChange: (value: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  label?: string;
+}
 
-  const tools = [
-    { icon: MessageCircle, color: '#64E1FF', label: 'Chat' },
-    { icon: Code2, color: '#009DFF', label: 'Code' },
-    { icon: ImageIcon, color: '#A78BFA', label: 'Image' },
-    // Removed Voice as requested
-    { icon: Video, color: '#F472B6', label: 'Video' },
-  ];
+const ElasticHueSlider: React.FC<ElasticHueSliderProps> = ({
+  value,
+  onChange,
+  min = 0,
+  max = 360,
+  step = 1,
+  label = 'Adjust Hue',
+}) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  const progress = ((value - min) / (max - min));
+  const thumbPosition = progress * 100; // Percentage
+
+  const handleMouseDown = () => setIsDragging(true);
+  const handleMouseUp = () => setIsDragging(false);
+
+  // We use the native input for actual dragging and value updates
+  // and overlay custom elements for styling and animation.
 
   return (
-    <section ref={containerRef} className="relative flex flex-col pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-8 sm:pb-12 md:pb-16 overflow-hidden h-auto">
+    <div className="scale-50 relative w-full max-w-xs flex flex-col items-center" ref={sliderRef}>
+      {label && <label htmlFor="hue-slider-native" className="text-gray-300 text-sm mb-1">{label}</label>}
+      <div className="relative w-full h-5 flex items-center"> {/* Wrapper for track and thumb */}
+        {/* Native input: Handles interaction, but visually hidden */}
+        <input
+          id="hue-slider-native"
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onTouchStart={handleMouseDown}
+          onTouchEnd={handleMouseUp}
+          // Style to make it cover the custom track but be transparent
+          className="absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer z-20"
+          style={{ WebkitAppearance: 'none' /* For Safari */ }}
+        />
 
-      <div className="container mx-auto z-10 relative px-2 sm:px-4 md:px-6">
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-8 items-start">
+        {/* Custom Track */}
+        <div className="absolute left-0 w-full h-1 bg-gray-700 rounded-full z-0"></div>
 
-          {/* Row/Col 1: Text Content */}
-          <div className="text-center lg:text-left flex flex-col items-center lg:items-start order-1">
-            <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-7xl font-display font-bold mb-4 tracking-tight text-slate-900 dark:text-white leading-[1.1] flex flex-wrap justify-center lg:justify-start gap-x-1 sm:gap-x-2">
-              <div className="flex flex-col items-center lg:items-start">
-                <span>One Conversation.</span>
-                <span className="text-gradient block">Infinite Possibilities.</span>
-              </div>
-            </h1>
+        {/* Custom Fill (Optional but nice visual) */}
+        <div
+          className="absolute left-0 h-1 bg-blue-500 rounded-full z-10"
+          style={{ width: `${thumbPosition}%` }}
+        ></div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-xs sm:text-base md:text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed max-w-2xl lg:max-w-xl backdrop-blur-sm rounded-lg"
-            >
-              Unify chat, code, image, and video into a single seamless workspace.
-              Stop switching context. Start creating the future.
-            </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="flex flex-col sm:flex-row gap-3 mb-8"
-            >
-              <button className="px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-brand-primary hover:bg-blue-600 text-white font-semibold text-sm sm:text-base shadow-[0_0_20px_rgba(0,157,255,0.4)] hover:shadow-[0_0_30px_rgba(0,157,255,0.6)] transition-all transform hover:-translate-y-1">
-                Join Early Access
-              </button>
-              <button className="px-4 py-2 sm:px-6 sm:py-3 rounded-full border border-slate-300 dark:border-slate-700 hover:border-brand-primary text-slate-700 dark:text-slate-300 font-medium text-sm sm:text-base transition-all hover:bg-slate-100 dark:hover:bg-slate-800 backdrop-blur-sm bg-white/5">
-                Watch the Demo
-              </button>
-            </motion.div>
+        {/* Custom Thumb (Animated) */}
+        {/* Position the thumb wrapper based on progress, then center the thumb inside */}
+        <motion.div
+          className="absolute top-1/2 transform -translate-y-1/2 z-30"
+          style={{ left: `${thumbPosition}%` }}
+          // Animate scale based on dragging state
+          animate={{ scale: isDragging ? 1.2 : 1 }}
+          transition={{ type: "spring", stiffness: 500, damping: isDragging ? 20 : 30 }} // Springy animation
+        >
 
-            {/* LLMs Section using CardDemo */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.2 }}
-              className="w-full max-w-md lg:max-w-none"
-            >
-              <div className="flex items-center justify-center lg:justify-start gap-2 mb-4 text-sm font-medium text-slate-500 dark:text-slate-400">
-                <motion.div
-                  animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
-                  transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
-                >
-                  <Sparkles size={14} className="text-brand-primary" />
-                </motion.div>
-                <span>Powered by best-in-class models</span>
-              </div>
-
-              {/* Integrated CardDemo */}
-              <div className="relative w-full h-[150px] sm:h-[180px] md:h-[220px] lg:h-[250px] overflow-visible flex-shrink-0">
-                <CardDemo />
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Row/Col 2: Visual (Orbit + Logo) */}
-          <div className="relative order-2 flex justify-center items-center h-[200px] sm:h-[250px] md:h-[300px] lg:h-[400px] w-full flex-shrink-0">
-            {/* 
-                  We use a fixed size container (320px) to match the radius math (160px).
-                  We use CSS transforms (scale) to make it responsive, ensuring icons stay perfectly on the ring.
-                  We apply the parallax y2 to this whole wrapper so everything stays locked together.
-              */}
-            <motion.div
-              style={{ y: y2 }}
-              className="relative flex items-center justify-center w-[320px] h-[320px] scale-40 sm:scale-60 md:scale-80 lg:scale-100 xl:scale-125"
-            >
-              {/* Orbit Ring */}
-              <div className="absolute inset-0 pointer-events-none opacity-30 dark:opacity-40">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                  className="w-full h-full rounded-full border border-dashed border-brand-primary/30 relative"
-                >
-                  {tools.map((tool, i) => {
-                    const angle = (i * 360) / tools.length;
-                    // Radius must match half the container width (160px) for icons to sit on the line
-                    const radius = 160;
-
-                    return (
-                      <div
-                        key={i}
-                        className="absolute top-1/2 left-1/2 -ml-6 -mt-6"
-                        style={{
-                          transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)`,
-                        }}
-                      >
-                        <motion.div
-                          animate={{
-                            y: [0, -8, 0],
-                            scale: [1, 1.1, 1],
-                            boxShadow: [
-                              "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                              `0 0 15px ${tool.color}60`,
-                              "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-                            ]
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            delay: i * 0.75, // Staggered delay
-                            ease: "easeInOut"
-                          }}
-                          className="w-12 h-12 flex items-center justify-center rounded-xl bg-white dark:bg-slate-900 border border-white/20 relative z-10"
-                        >
-                          <tool.icon style={{ color: tool.color }} size={24} />
-                        </motion.div>
-                      </div>
-                    );
-                  })}
-                </motion.div>
-              </div>
-
-              {/* Central 3D Logo */}
-              <div className="relative z-10 w-32 h-32 md:w-48 md:h-48 flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand-cyan to-brand-accent opacity-50 blur-xl animate-pulse"></div>
-                <div className="absolute inset-4 rounded-3xl bg-white dark:bg-black border border-white/50 dark:border-white/10 backdrop-blur-xl shadow-[0_0_50px_rgba(100,225,255,0.4)] flex items-center justify-center z-10">
-                  <LogoIcon className="w-24 h-24 md:w-32 md:h-32" />
-                </div>
-                <motion.div
-                  animate={{ rotate: -360, scale: [1, 1.1, 1] }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                  className="absolute -inset-4 rounded-full border-t border-r border-brand-cyan/50"
-                />
-              </div>
-            </motion.div>
-          </div>
-
-        </div>
+        </motion.div>
       </div>
 
-      {/* Gradient Wave Bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-brand-light dark:from-brand-dark to-transparent z-20 pointer-events-none" />
-    </section>
+      {/* Optional: Display current value below */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={value} // Key changes when value changes, triggering exit/enter
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 5 }}
+          transition={{ duration: 0.2 }}
+          className="text-xs text-gray-500 mt-2" // Increased margin top for spacing
+        >
+          {value}°
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
+interface LightningProps {
+  hue?: number;
+  xOffset?: number;
+  speed?: number;
+  intensity?: number;
+  size?: number;
+}
+
+const Lightning: React.FC<LightningProps> = ({
+  hue = 230,
+  xOffset = 0,
+  speed = 1,
+  intensity = 1,
+  size = 1,
+}) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const resizeCanvas = () => {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+    };
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const gl = canvas.getContext("webgl");
+    if (!gl) {
+      console.error("WebGL not supported");
+      return;
+    }
+
+    const vertexShaderSource = `
+      attribute vec2 aPosition;
+      void main() {
+        gl_Position = vec4(aPosition, 0.0, 1.0);
+      }
+    `;
+
+    const fragmentShaderSource = `
+      precision mediump float;
+      uniform vec2 iResolution;
+      uniform float iTime;
+      uniform float uHue;
+      uniform float uXOffset;
+      uniform float uSpeed;
+      uniform float uIntensity;
+      uniform float uSize;
+      
+      #define OCTAVE_COUNT 10
+
+      // Convert HSV to RGB.
+      vec3 hsv2rgb(vec3 c) {
+          vec3 rgb = clamp(abs(mod(c.x * 6.0 + vec3(0.0,4.0,2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
+          return c.z * mix(vec3(1.0), rgb, c.y);
+      }
+
+      float hash11(float p) {
+          p = fract(p * .1031);
+          p *= p + 33.33;
+          p *= p + p;
+          return fract(p);
+      }
+
+      float hash12(vec2 p) {
+          vec3 p3 = fract(vec3(p.xyx) * .1031);
+          p3 += dot(p3, p3.yzx + 33.33);
+          return fract((p3.x + p3.y) * p3.z);
+      }
+
+      mat2 rotate2d(float theta) {
+          float c = cos(theta);
+          float s = sin(theta);
+          return mat2(c, -s, s, c);
+      }
+
+      float noise(vec2 p) {
+          vec2 ip = floor(p);
+          vec2 fp = fract(p);
+          float a = hash12(ip);
+          float b = hash12(ip + vec2(1.0, 0.0));
+          float c = hash12(ip + vec2(0.0, 1.0));
+          float d = hash12(ip + vec2(1.0, 1.0));
+          
+          vec2 t = smoothstep(0.0, 1.0, fp);
+          return mix(mix(a, b, t.x), mix(c, d, t.x), t.y);
+      }
+
+      float fbm(vec2 p) {
+          float value = 0.0;
+          float amplitude = 0.5;
+          for (int i = 0; i < OCTAVE_COUNT; ++i) {
+              value += amplitude * noise(p);
+              p *= rotate2d(0.45);
+              p *= 2.0;
+              amplitude *= 0.5;
+          }
+          return value;
+      }
+
+      void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
+          // Normalized pixel coordinates.
+          vec2 uv = fragCoord / iResolution.xy;
+          uv = 2.0 * uv - 1.0;
+          uv.x *= iResolution.x / iResolution.y;
+          // Apply horizontal offset.
+          uv.x += uXOffset;
+          
+          // Adjust uv based on size and animate with speed.
+          uv += 2.0 * fbm(uv * uSize + 0.8 * iTime * uSpeed) - 1.0;
+          
+          float dist = abs(uv.x);
+          // Compute base color using hue.
+          vec3 baseColor = hsv2rgb(vec3(uHue / 360.0, 0.7, 0.8));
+          // Compute color with intensity and speed affecting time.
+          vec3 col = baseColor * pow(mix(0.0, 0.07, hash11(iTime * uSpeed)) / dist, 1.0) * uIntensity;
+          col = pow(col, vec3(1.0));
+          fragColor = vec4(col, 1.0);
+      }
+
+      void main() {
+          mainImage(gl_FragColor, gl_FragCoord.xy);
+      }
+    `;
+
+    const compileShader = (
+      source: string,
+      type: number
+    ): WebGLShader | null => {
+      const shader = gl.createShader(type);
+      if (!shader) return null;
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error("Shader compile error:", gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    };
+
+    const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
+    const fragmentShader = compileShader(
+      fragmentShaderSource,
+      gl.FRAGMENT_SHADER
+    );
+    if (!vertexShader || !fragmentShader) return;
+
+    const program = gl.createProgram();
+    if (!program) return;
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error("Program linking error:", gl.getProgramInfoLog(program));
+      return;
+    }
+    gl.useProgram(program);
+
+    const vertices = new Float32Array([
+      -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
+    ]);
+    const vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+    const aPosition = gl.getAttribLocation(program, "aPosition");
+    gl.enableVertexAttribArray(aPosition);
+    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+
+    const iResolutionLocation = gl.getUniformLocation(program, "iResolution");
+    const iTimeLocation = gl.getUniformLocation(program, "iTime");
+    const uHueLocation = gl.getUniformLocation(program, "uHue");
+    const uXOffsetLocation = gl.getUniformLocation(program, "uXOffset");
+    const uSpeedLocation = gl.getUniformLocation(program, "uSpeed");
+    const uIntensityLocation = gl.getUniformLocation(program, "uIntensity");
+    const uSizeLocation = gl.getUniformLocation(program, "uSize");
+
+    const startTime = performance.now();
+    const render = () => {
+      resizeCanvas();
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
+      const currentTime = performance.now();
+      gl.uniform1f(iTimeLocation, (currentTime - startTime) / 1000.0);
+      gl.uniform1f(uHueLocation, hue);
+      gl.uniform1f(uXOffsetLocation, xOffset);
+      gl.uniform1f(uSpeedLocation, speed);
+      gl.uniform1f(uIntensityLocation, intensity);
+      gl.uniform1f(uSizeLocation, size);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, [hue, xOffset, speed, intensity, size]);
+
+  return <canvas ref={canvasRef} className="w-full h-full relative" />;
+};
+
+const Hero: React.FC = () => {
+  // State for the lightning hue
+  const [lightningHue, setLightningHue] = useState(220); // Default hue
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  return (
+    <div className="relative w-full bg-black text-white overflow-hidden">
+      {/* Main container with space for content */}
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 min-h-screen flex flex-col justify-center">
+
+        {/* Main hero content */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative z-30 flex flex-col items-center text-center max-w-4xl mx-auto mt-20"
+        >
+          <ElasticHueSlider
+            value={lightningHue}
+            onChange={setLightningHue}
+            label="Adjust Lightning Hue"
+          />
+
+          <motion.h1
+            variants={itemVariants}
+            className="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-[1.1] mt-8"
+          >
+            <div className="flex flex-col items-center">
+              <span>One Conversation.</span>
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent block">Infinite Possibilities.</span>
+            </div>
+          </motion.h1>
+
+          {/* Description */}
+          <motion.p
+            variants={itemVariants}
+            className="text-gray-400 mb-9 max-w-2xl text-lg sm:text-xl leading-relaxed"
+          >
+            Unify chat, code, image, and video into a single seamless workspace.
+            Stop switching context. Start creating the future.
+          </motion.p>
+
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-4 mb-12"
+          >
+            <button className="px-8 py-4 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] transition-all transform hover:-translate-y-1">
+              Join Early Access
+            </button>
+            <button className="px-8 py-4 rounded-full border border-white/20 hover:border-blue-400 text-white font-medium text-lg transition-all hover:bg-white/5 backdrop-blur-sm">
+              Watch the Demo
+            </button>
+          </motion.div>
+
+          {/* LLMs Section using CardDemo */}
+          <motion.div
+            variants={itemVariants}
+            className="w-full max-w-md lg:max-w-none flex flex-col items-center"
+          >
+            <div className="flex items-center justify-center gap-2 mb-6 text-sm font-medium text-gray-400">
+              <motion.div
+                animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
+                transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
+              >
+                <Sparkles size={16} className="text-blue-400" />
+              </motion.div>
+              <span>Powered by best-in-class models</span>
+            </div>
+
+            {/* Integrated CardDemo */}
+            <div className="relative w-full max-w-2xl h-[200px] sm:h-[250px] overflow-visible flex-shrink-0">
+              <CardDemo />
+            </div>
+          </motion.div>
+
+        </motion.div>
+      </div>
+
+      {/* Background elements */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="absolute inset-0 z-0"
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/80"></div>
+
+        {/* Glowing circle */}
+        <div className="absolute top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-b from-blue-500/20 to-purple-600/10 blur-3xl"></div>
+
+        {/* Central light beam - now using the state variable for hue */}
+        <div className="absolute top-0 w-[100%] left-1/2 transform -translate-x-1/2 h-full">
+          <Lightning
+            hue={lightningHue} // Use the state variable here
+            xOffset={0}
+            speed={1.6}
+            intensity={0.6}
+            size={2}
+          />
+        </div>
+
+        {/* Planet/sphere */}
+        <div className="z-10 absolute top-[55%] left-1/2 transform -translate-x-1/2 w-[600px] h-[600px] backdrop-blur-3xl rounded-full bg-[radial-gradient(circle_at_25%_90%,_#1e386b_15%,_#000000de_70%,_#000000ed_100%)]"></div>
+      </motion.div>
+    </div>
   );
 };
 

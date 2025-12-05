@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Image as ImageIcon, Video, Bot, Sparkles } from 'lucide-react';
 
+import { EncryptedText } from './ui/encrypted-text';
+
 const UnifiedWorkflow: React.FC = () => {
     return (
         <section className="relative w-full bg-slate-50 dark:bg-slate-950 py-20 md:py-32 overflow-hidden">
@@ -14,11 +16,23 @@ const UnifiedWorkflow: React.FC = () => {
                     viewport={{ once: true }}
                     className="text-center max-w-3xl mx-auto mb-20"
                 >
-                    <h2 className="text-4xl md:text-6xl font-display font-bold text-slate-900 dark:text-white mb-6 tracking-tight">
-                        One Conversation. <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-primary">
-                            Infinite Possibilities.
-                        </span>
+                    <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight">
+                        <div className="text-slate-900 dark:text-white mb-2">
+                            <EncryptedText
+                                text="One Conversation."
+                                encryptedClassName="text-neutral-500"
+                                revealedClassName="text-slate-900 dark:text-white"
+                                revealDelayMs={50}
+                            />
+                        </div>
+                        <div className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-primary">
+                            <EncryptedText
+                                text="Infinite Possibilities."
+                                encryptedClassName="text-neutral-500"
+                                revealedClassName="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-primary"
+                                revealDelayMs={50}
+                            />
+                        </div>
                     </h2>
                     <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed">
                         Why switch tools? Access every top-tier model and generate any media type without ever leaving the chat.

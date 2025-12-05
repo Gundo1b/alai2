@@ -1,5 +1,6 @@
 import React from 'react';
 import { LogoIcon, LogoText } from './Logo';
+import { Twitter, Github, Linkedin, Instagram } from 'lucide-react';
 
 const Footer: React.FC = () => {
     const footerSections = {
@@ -43,7 +44,7 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Footer Sections */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
                     {Object.entries(footerSections).map(([section, links]) => (
                         <div key={section} className="flex flex-col">
                             <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">{section}</h3>
@@ -58,6 +59,22 @@ const Footer: React.FC = () => {
                             </ul>
                         </div>
                     ))}
+                </div>
+
+                {/* Social Icons */}
+                <div className="flex justify-center space-x-6 mb-6">
+                    <a href="#" className="text-slate-400 hover:text-brand-primary transition-colors">
+                        <Twitter size={20} />
+                    </a>
+                    <a href="#" className="text-slate-400 hover:text-brand-primary transition-colors">
+                        <Github size={20} />
+                    </a>
+                    <a href="#" className="text-slate-400 hover:text-brand-primary transition-colors">
+                        <Linkedin size={20} />
+                    </a>
+                    <a href="#" className="text-slate-400 hover:text-brand-primary transition-colors">
+                        <Instagram size={20} />
+                    </a>
                 </div>
 
                 {/* Copyright */}
