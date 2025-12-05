@@ -55,6 +55,9 @@ const Pricing: React.FC = () => {
           {tiers.map((tier, idx) => (
             <motion.div
               key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
               whileHover={{ y: -8 }}
               className={`relative p-8 rounded-3xl border backdrop-blur-xl ${tier.gradient ? 'border-brand-primary shadow-2xl shadow-brand-primary/20 bg-white/10' : 'border-slate-200 dark:border-white/10 bg-white/60 dark:bg-white/5'}`}
             >

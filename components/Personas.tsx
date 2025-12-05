@@ -41,6 +41,9 @@ const Personas: React.FC = () => {
           {personas.map((p, i) => (
             <motion.div
               key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -10 }}
               className="relative w-full max-w-sm group"
             >

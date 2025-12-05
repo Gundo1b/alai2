@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Layers, DollarSign, BrainCircuit, XCircle, CheckCircle2, MessageSquare, Terminal, Image, Clapperboard } from 'lucide-react';
-import { BackgroundLines } from './ui/background-lines';
 
 const ProblemSolution: React.FC = () => {
     const problems = [
@@ -21,8 +20,8 @@ const ProblemSolution: React.FC = () => {
     return (
         <div className="relative py-24 px-4 overflow-hidden">
             {/* PROBLEM SECTION */}
-            <BackgroundLines className="h-screen w-full mb-32">
-                <section className="max-w-7xl mx-auto relative z-10">
+            <div className="py-8 bg-red-50/95 dark:bg-red-900/30 rounded-3xl mx-4 mb-32 relative z-10">
+                <section className="max-w-7xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -52,52 +51,107 @@ const ProblemSolution: React.FC = () => {
                         ))}
                     </div>
                 </section>
-            </BackgroundLines>
+            </div>
 
             {/* SOLUTION SECTION */}
-            <section className="max-w-7xl mx-auto">
+            <section className="max-w-7xl mx-auto relative py-8 bg-gradient-to-b from-slate-50/95 to-white/95 dark:from-slate-950/30 dark:to-black/30 backdrop-blur-sm rounded-3xl mx-4 -mt-8 relative z-10">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <div className="inline-block px-4 py-1.5 rounded-full bg-brand-primary/10 text-brand-primary font-medium text-sm mb-4">
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        whileInView={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="inline-block px-4 py-1.5 rounded-full bg-brand-primary/10 text-brand-primary font-medium text-sm mb-4"
+                    >
                         The Solution
-                    </div>
-                    <h2 className="text-4xl md:text-6xl font-display font-bold text-slate-900 dark:text-white mb-6">
+                    </motion.div>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        className="text-4xl md:text-6xl font-display font-bold text-slate-900 dark:text-white mb-6"
+                    >
                         Integen <span className="text-gradient">Unifies Everything</span>
-                    </h2>
+                    </motion.h2>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <motion.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                        visible: {
+                            transition: {
+                                staggerChildren: 0.1,
+                                delayChildren: 0.6
+                            }
+                        }
+                    }}
+                >
                     {solutions.map((sol, idx) => (
                         <motion.div
                             key={idx}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.1 }}
-                            whileHover={{ y: -10 }}
+                            variants={{
+                                hidden: { opacity: 0, y: 50, scale: 0.95 },
+                                visible: { opacity: 1, y: 0, scale: 1 }
+                            }}
+                            whileHover={{ y: -10, scale: 1.02 }}
+                            transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
                             className={`group relative p-8 rounded-3xl overflow-hidden glass-card cursor-pointer`}
                         >
                             {/* Gradient Border Effect */}
-                            <div className={`absolute inset-0 bg-gradient-to-br ${sol.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                            <motion.div
+                                className={`absolute inset-0 bg-gradient-to-br ${sol.color} opacity-0`}
+                                initial={{ opacity: 0 }}
+                                whileHover={{ opacity: 0.15 }}
+                                transition={{ duration: 0.3 }}
+                            />
 
                             <div className="relative z-10 flex flex-col h-full">
-                                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${sol.color} flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                                <motion.div
+                                    className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${sol.color} flex items-center justify-center mb-6 shadow-lg`}
+                                    initial={{ scale: 0 }}
+                                    whileInView={{ scale: 1 }}
+                                    transition={{ duration: 0.4, delay: idx * 0.1 }}
+                                    whileHover={{ scale: 1.1 }}
+                                >
                                     <sol.icon className="text-white w-7 h-7" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{sol.title}</h3>
-                                <p className="text-slate-600 dark:text-slate-400">{sol.desc}</p>
+                                </motion.div>
+                                <motion.h3
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.4, delay: idx * 0.1 + 0.2 }}
+                                    className="text-2xl font-bold text-slate-900 dark:text-white mb-2"
+                                >
+                                    {sol.title}
+                                </motion.h3>
+                                <motion.p
+                                    initial={{ opacity: 0, x: 20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.4, delay: idx * 0.1 + 0.3 }}
+                                    className="text-slate-600 dark:text-slate-400"
+                                >
+                                    {sol.desc}
+                                </motion.p>
 
-                                <div className="mt-auto pt-8 flex items-center text-sm font-semibold text-slate-400 group-hover:text-brand-primary transition-colors">
+                                <motion.div
+                                    className="mt-auto pt-8 flex items-center text-sm font-semibold text-slate-400 group-hover:text-brand-primary transition-colors"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.4, delay: idx * 0.1 + 0.4 }}
+                                >
                                     Explore <CheckCircle2 className="w-4 h-4 ml-2" />
-                                </div>
+                                </motion.div>
                             </div>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </section>
         </div>
     );
